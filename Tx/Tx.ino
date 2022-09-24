@@ -8,18 +8,29 @@
 
 
 #include <SoftwareSerial.h>
-SoftwareSerial mySerial(3,4);  //rx, tx
+#include <Bounce2.h>
+SoftwareSerial mySerial(0,4);  //rx, tx
+Bounce bounce = Bounce();
+#define Tack 3
+byte angle;
 
 void setup() 
 { 
+  bounce.attach(Tack, INPUT);
+  bounce.interval(5);
   pinMode(A1, INPUT);
   mySerial.begin(9600); //Serial.begin(9600);
+  angle = 0;
 } 
  
 void loop() 
 { 
-  int data= analogRead(A1); 
-  byte angle= map(data, 0, 1023, 0, 180);   
+  bounce.update();
+  if(bounce.fell()){
+    angle = angle + 1;
+  }
+  //int data= analogRead(A1); 
+  //byte angle= map(data, 0, 1023, 0, 180);   
   mySerial.write(angle); 
   delay(50);                           
 } 

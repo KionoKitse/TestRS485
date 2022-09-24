@@ -12,17 +12,18 @@ Servo myservo;
 void setup() 
 { 
   Serial.begin(9600);  
-  myservo.attach(3);  
-  myservo.write(90);
+  //myservo.attach(3);  
+  //myservo.write(90);
 } 
  
 void loop() 
 { 
   if (Serial.available()) {
     byte angle = Serial.read();
-    if(angle<=180) 
-    {
-      myservo.write(angle);
-    }
+    Serial.println(angle);
+    //if(angle<=180) 
+    //{
+      //myservo.write(angle);
+    //}
   }
 }  
